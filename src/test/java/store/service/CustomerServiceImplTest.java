@@ -25,7 +25,7 @@ class CustomerServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        firstBuyerRegisterRequest=new CustomerRegistrationRequest();
+        firstBuyerRegisterRequest = new CustomerRegistrationRequest();
         firstBuyerRegisterRequest.setEmail("ademusa222@gmail.com");
         firstBuyerRegisterRequest
                 .setAddress("312 Herbert Macaulay Way, Sabo-Yaba");
