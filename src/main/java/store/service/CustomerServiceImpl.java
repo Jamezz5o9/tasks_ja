@@ -4,7 +4,6 @@ import store.data.dto.*;
 import store.data.models.Customer;
 import store.data.models.Product;
 import store.data.repositories.CustomerRepository;
-import store.data.repositories.CustomerRepositoryImpl;
 import store.exceptions.BuyerRegistrationException;
 import store.exceptions.StoreException;
 import store.utils.validators.UserDetailsValidator;
@@ -76,15 +75,14 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public String orderProduct(ProductPurchaseRequest productPurchaseRequest) {
-        Customer customer =
-                customerRepository.findById(productPurchaseRequest.getCustomerId());
+        Customer customer = customerRepository.findById(productPurchaseRequest.getCustomerId());
         //search for product
-        Product product =
-                productService.getProductById(productPurchaseRequest.getProductId());
+        Product product = productService.getProductById(productPurchaseRequest.getProductId());
         if (product==null) throw new StoreException("product not found");
         //validate quantity
         if (product.getQuantity()>= productPurchaseRequest.getQuantity()){
             customer.getOrders().add(product);
+            product.setQuantity(product.getQuantity() - productPurchaseRequest.getQuantity());
             customerRepository.save(customer);
             return "order successful";
         }else{
